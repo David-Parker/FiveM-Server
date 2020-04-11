@@ -3,14 +3,21 @@
   <ItemGroup>
     <ProjectFile Include="SmallEconomy\SmallEconomyClient\SmallEconomyClient.csproj"/>
     <ProjectFile Include="SmallEconomy\SmallEconomyServer\SmallEconomyServer.csproj"/>
+    <ProjectFile Include="RTSync\RTSyncClient\RTSyncClient.csproj"/>
   </ItemGroup>
+  <PropertyGroup>
+    <CustomPath>..\..\..\..\resources\[custom]</CustomPath>
+  </PropertyGroup>
   <Target Name="DropResources" AfterTargets="Build">
     <ItemGroup>
       <CsProj Include="SmallEconomy\SmallEconomyClient\SmallEconomyClient.csproj">
-        <DropLocation>..\..\..\resources\[small-econ]\small-econ-client</DropLocation>
+        <DropLocation>$(CustomPath)\small-econ\small-econ-client</DropLocation>
       </CsProj>
       <CsProj Include="SmallEconomy\SmallEconomyServer\SmallEconomyServer.csproj">
-        <DropLocation>..\..\..\resources\[small-econ]\small-econ-server</DropLocation>
+        <DropLocation>$(CustomPath)\small-econ\small-econ-server</DropLocation>
+      </CsProj>
+      <CsProj Include="RTSync\RTSyncClient\RTSyncClient.csproj">
+        <DropLocation>$(CustomPath)\rtsync\rtsync-client</DropLocation>
       </CsProj>
     </ItemGroup>
     <MSBuild Projects="@(CsProj)" Targets="Build;DropBinaries" Properties="DropPath=%(CsProj.DropLocation)" />
