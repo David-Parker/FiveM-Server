@@ -22,8 +22,8 @@ namespace RTSync.Server
 
             TriggerClientEvent("RTSync", now.Hour, now.Minute, now.Second);
 
-            // Sync every second
-            await Delay(1000);
+            // Sync every 10 seconds
+            await Delay(10000);
         }
     }
 }

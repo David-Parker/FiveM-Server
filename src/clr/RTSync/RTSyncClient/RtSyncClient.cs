@@ -13,7 +13,6 @@ namespace RTSync.Client
 
         private void RTSync(int hour, int minute, int second)
         {
-            Debug.WriteLine($"Time update to {hour}/{minute}/{second}.");
             API.NetworkOverrideClockTime(hour, minute, second);
         }
     }
