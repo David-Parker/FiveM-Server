@@ -11,20 +11,15 @@ namespace RTSync.Server
         {
             API.SetConvarReplicated("vmenu_enable_time_sync", "false");
             Tick += TimeSync;
-            EventHandlers["playerConnecting"] += new Action<Player, string, dynamic, dynamic>(OnPlayerConnecting);
+            EventHandlers["RTSyncPlayerConnected"] += new Action<Player>(PlayerConnected);
         }
 
         private async Task TimeSync()
         {
             TriggerClientEvent("RTSync", GetTime().ToString());
 
-            // Sync every 5 minutes
-            await Delay(5 * 60 * 1000);
-        }
-
-        private void OnPlayerConnecting([FromSource]Player player, string playerName, dynamic setKickReason, dynamic deferrals)
-        {
-            TriggerClientEvent(player, "RTSync", GetTime().ToString());
+            // Sync every minute
+            await Delay(1 * 60 * 1000);
         }
 
         private DateTimeOffset GetTime()
@@ -35,6 +30,16 @@ namespace RTSync.Server
             now = now.AddHours(offset);
 
             return now;
+        }
+
+        private void PlayerConnected([FromSource] Player player)
+        {
+            if (player == null)
+            {
+                throw new ArgumentNullException(nameof(player));
+            }
+
+            TriggerClientEvent(player, "RTSync", GetTime().ToString());
         }
     }
 }

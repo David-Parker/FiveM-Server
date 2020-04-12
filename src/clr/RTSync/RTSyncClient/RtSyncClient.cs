@@ -19,6 +19,7 @@ namespace RTSync.Client
             this.sync = new object();
             EventHandlers["RTSync"] += new Action<string>(RTSync);
             Tick += TimeUpdate;
+            TriggerServerEvent("RTSyncPlayerConnected");
         }
 
         private void RTSync(string time)
