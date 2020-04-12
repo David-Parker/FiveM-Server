@@ -19,11 +19,11 @@ namespace RTSync.Server
 
             int offset = API.GetConvarInt("rtsync_timezone_offset", 0);
             Debug.WriteLine($"Offset: {offset}");
-            now.AddHours(offset);
+            now = now.AddHours(offset);
 
             TriggerClientEvent("RTSync", now.Hour, now.Minute, now.Second);
 
-            // Sync every 30s
+            // Sync every second
             await Delay(1000);
         }
     }
