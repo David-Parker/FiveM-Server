@@ -18,7 +18,6 @@ namespace RTSync.Server
             DateTime now = DateTime.UtcNow;
 
             int offset = API.GetConvarInt("rtsync_timezone_offset", 0);
-            Debug.WriteLine($"Offset: {offset}");
             now = now.AddHours(offset);
 
             TriggerClientEvent("RTSync", now.Hour, now.Minute, now.Second);
