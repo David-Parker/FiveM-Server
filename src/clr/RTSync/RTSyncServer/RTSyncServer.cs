@@ -11,19 +11,30 @@ namespace RTSync.Server
         {
             API.SetConvarReplicated("vmenu_enable_time_sync", "false");
             Tick += TimeSync;
+            EventHandlers["playerConnecting"] += new Action<Player, string, dynamic, dynamic>(OnPlayerConnecting);
         }
 
         private async Task TimeSync()
         {
-            DateTime now = DateTime.UtcNow;
+            TriggerClientEvent("RTSync", GetTime().ToString());
+
+            // Sync every 30s
+            await Delay(30000);
+        }
+
+        private void OnPlayerConnecting([FromSource]Player player, string playerName, dynamic setKickReason, dynamic deferrals)
+        {
+            TriggerClientEvent(player, "RTSync", GetTime().ToString());
+        }
+
+        private DateTimeOffset GetTime()
+        {
+            DateTimeOffset now = DateTimeOffset.UtcNow;
 
             int offset = API.GetConvarInt("rtsync_timezone_offset", 0);
             now = now.AddHours(offset);
 
-            TriggerClientEvent("RTSync", now.Hour, now.Minute, now.Second);
-
-            // Sync every 10 seconds
-            await Delay(10000);
+            return now;
         }
     }
 }
