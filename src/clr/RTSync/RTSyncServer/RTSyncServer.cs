@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using CitizenFX.Core;
+using CitizenFX.Core.Native;
 
 namespace RTSync.Server
 {
@@ -16,7 +17,9 @@ namespace RTSync.Server
             // Sync every 30s
             await Delay(30000);
 
-            DateTime now = DateTime.Now;
+            DateTime now = DateTime.UtcNow;
+            int offset = API.GetConvarInt("rtsync_timezone_offset", 0);
+            now.AddHours(offset);
 
             TriggerClientEvent("RTSync", now.Hour, now.Minute, now.Second);
         }
