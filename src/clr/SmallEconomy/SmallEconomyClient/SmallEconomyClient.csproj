@@ -61,11 +61,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="__resource.lua">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\SmallEconomyShared\SmallEconomyShared.csproj">
       <Project>{3429359d-0500-47a1-b546-c25959d9966f}</Project>
       <Name>SmallEconomyShared</Name>

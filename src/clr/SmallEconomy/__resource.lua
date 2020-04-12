@@ -4,3 +4,8 @@ client_scripts {
 	'SmallEconomyClient.net.dll',
 	'SmallEconomyShared.net.dll'
 }
+
+server_scripts {
+	'SmallEconomyServer.net.dll',
+	'SmallEconomyShared.net.dll'
+}
