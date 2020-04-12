@@ -15,14 +15,16 @@ namespace RTSync.Server
 
         private async Task TimeSync()
         {
-            // Sync every 30s
-            await Delay(30000);
-
             DateTime now = DateTime.UtcNow;
+
             int offset = API.GetConvarInt("rtsync_timezone_offset", 0);
+            Debug.WriteLine($"Offset: {offset}");
             now.AddHours(offset);
 
             TriggerClientEvent("RTSync", now.Hour, now.Minute, now.Second);
+
+            // Sync every 30s
+            await Delay(1000);
         }
     }
 }
