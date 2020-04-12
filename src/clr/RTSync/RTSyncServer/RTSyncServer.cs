@@ -9,6 +9,7 @@ namespace RTSync.Server
     {
         public RTSyncServer()
         {
+            API.SetConvarReplicated("vmenu_enable_time_sync", "false");
             Tick += TimeSync;
         }
 
