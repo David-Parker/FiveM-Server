@@ -25,7 +25,7 @@ namespace RTSync.Client
         {
             lock (this.sync)
             {
-                Debug.WriteLine($"Time update: {time}");
+                Debug.WriteLine($"[RTSync] Time update: {time}");
                 this.serverTimeBase = DateTimeOffset.Parse(time);
                 this.gameTime = API.GetGameTimer();
                 this.start = true;

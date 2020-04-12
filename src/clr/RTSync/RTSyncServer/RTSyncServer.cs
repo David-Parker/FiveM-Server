@@ -18,8 +18,8 @@ namespace RTSync.Server
         {
             TriggerClientEvent("RTSync", GetTime().ToString());
 
-            // Sync every 30s
-            await Delay(30000);
+            // Sync every 5 minutes
+            await Delay(5 * 60 * 1000);
         }
 
         private void OnPlayerConnecting([FromSource]Player player, string playerName, dynamic setKickReason, dynamic deferrals)
