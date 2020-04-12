@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using CitizenFX.Core;
 using CitizenFX.Core.Native;
@@ -9,13 +8,14 @@ namespace RTSync.Client
     public class ClientHandler : BaseScript
     {
         private DateTimeOffset serverTimeBase;
-        private Stopwatch stopwatch;
-        private bool start = false;
+        private int gameTime;
+        private bool start;
         private object sync;
 
         public ClientHandler()
         {
-            this.stopwatch = new Stopwatch();
+            this.start = false;
+            this.gameTime = API.GetGameTimer();
             this.sync = new object();
             EventHandlers["RTSync"] += new Action<string>(RTSync);
             Tick += TimeUpdate;
@@ -25,8 +25,9 @@ namespace RTSync.Client
         {
             lock (this.sync)
             {
+                Debug.WriteLine($"Time update: {time}");
                 this.serverTimeBase = DateTimeOffset.Parse(time);
-                this.stopwatch.Restart();
+                this.gameTime = API.GetGameTimer();
                 this.start = true;
             }
         }
@@ -37,7 +38,7 @@ namespace RTSync.Client
             {
                 if (start)
                 {
-                    DateTimeOffset time = this.serverTimeBase.AddMilliseconds(this.stopwatch.ElapsedMilliseconds);
+                    DateTimeOffset time = this.serverTimeBase.AddMilliseconds(API.GetGameTimer() - this.gameTime);
                     API.NetworkOverrideClockTime(time.Hour, time.Minute, time.Second);
                 }
             }
